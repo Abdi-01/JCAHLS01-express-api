@@ -9,9 +9,19 @@ App.get('/', (req, res) => {
     res.status(200).send("<h1>Intro express API</h1>");
 })
 
+// Test DB Connection
+const { dbConf } = require('./config/database')
+dbConf.connect((error)=>{
+    if(error){
+        console.log('DB Connection ERROR ❌', error)
+    }else{
+        console.log('DB Connection SUCCESS ✅')
+    }
+})
+
 // Endpoint /users
 const { usersRouter } = require('./routers');
-App.use('/users',usersRouter)
+App.use('/users', usersRouter)
 
 App.listen(PORT, () => {
     let endpoint = JSON.parse(fs.readFileSync("./data/db.json"))
